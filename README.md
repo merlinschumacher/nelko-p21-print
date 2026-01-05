@@ -1,5 +1,17 @@
-# nelko-p21-capture
-This is a capture of the bluetooth traffic of a Nelko P21 label printer
+# Nelko P21 label printer script and acapture
+This is a wireshark capture of the bluetooth traffic of a Nelko P21 label printer and a resulting simple python script, that makes it possible to print labels without the offical app.
+
+## Script usage
+
+The printer works over a Bluetooth classic connection using the serial protocol (sometimes called SPP or RFCOMM). To establish a connection to the printer power it on and pair it using any Bluetooth connection tool. Then create an RFCOMM connection, either by using your tool of choice or by using bluez' `rfcomm` cli tool:
+
+```bash
+$ rfcomm connect /dev/rfcomm0 XX:XX:XX:XX:XX:XX
+```
+
+Make sure to replace the `XX:XX...` part with the Bluetooth MAC of your printer. When the connection was successful, you can start the script. I recommend creating a virtual environment and installing the requirements via `pip`. The script will print a help screen on start.
+
+## The captured traffic and the printers protocol
 
 It contains a connection and a print of the default template on a 14x40mm label. The entire communication of the printer runs via SPP/RFCOMM aka a serial connection over Bluetooth. The printer also has an internal NFC reader to identify the the label rolls put inside. It automatically determines the format of the labels this way. It also seems to be a type of soft DRM, where the app complains, if you use third-party label rolls.
 
