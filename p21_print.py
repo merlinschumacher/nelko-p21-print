@@ -295,6 +295,15 @@ def send_command(command):
     except serial.SerialException as e:
         print(f"Failed to send data via serial connection: {e}")
         return
+    
+def send_command_raw(command):
+    try:
+        with serial.Serial(device, 115200, timeout=1) as ser:
+            ser.write(command)
+            return ser.readline()
+    except serial.SerialException as e:
+        print(f"Failed to send data via serial connection: {e}")
+        return
 
 def build_print_command(imagedata, density, copies):
     serial_data = f"""\033!o\r\n
@@ -335,13 +344,9 @@ def main():
     if (args.device):
         device = args.device
     if args.image:
-        ready = get_readiness_status()
-        if ready != PrinterReadinessStatus.READY:
-            print(f"Printer is not ready: {ready}")
-            return
         bitdata = load_image(args.image)
         print_command = build_print_command(bitdata, args.density, args.copies)
-        answer= send_command(print_command)
+        answer= send_command_raw(print_command)
         print(answer.hex())
     if args.config:
         print("Printer configuration:")
