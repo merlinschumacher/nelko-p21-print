@@ -304,7 +304,7 @@ The board is marked `P21 V2.2`. Main components:
 | Ref | Part | Function |
 |---|---|---|
 | U3 | Jieli **AC6951C** (BR23 / AC695x family), LQFP48, with a 24 MHz crystal (Y1) and PCB antenna (ANT1) | Bluetooth SoC + printer controller |
-| U4 | NFC reader front-end (marked `YC6018`, QFN-32, 27.12 MHz crystal Y2 — the standard NFC carrier) | reads the label roll's NFC (NTAG-style) tag |
+| U4 | Yichip **YC5018** — 13.56 MHz RFID/NFC reader (ISO 14443A/B, MIFARE), QFN-32-EP, with a 27.12 MHz crystal (Y2 = 2× the carrier) | reads the label roll's NFC (NTAG-style) tag |
 | U5 | `PT5139-HT` (TSSOP-16) | motor / stepper driver (paper feed) |
 | U1 | TP4056 | Li-ion battery charger |
 | — | 18650 Li-ion cell, 3.7 V, 1300 mAh | power |
@@ -323,6 +323,9 @@ The main SoC is a Jieli BR23-family part in an LQFP48 package (on-chip marking
   pinout (Figure 1-1, page 4) and pin descriptions (page 5 onward).
 - [Jieli-Tech/fw-AC63_BT_SDK](https://github.com/Jieli-Tech/fw-AC63_BT_SDK) — Jieli's public SDK
   for this chip family.
+- Yichip YC5018 (the NFC reader, U4) — [LCSC / JLCPCB part C2916804](https://jlcpcb.com/partdetail/Yichip-YC5018/C2916804).
+- PT5139 (the motor driver, U5, a dual H-bridge) — [datasheet](https://pdf.jiepei.com/pt5139-33489387.html), [LCSC part C336601](https://www.lcsc.com/product-detail/C336601.html).
+- TP4056 (the Li-ion charger, U1) — [datasheet](https://www.mikrocontroller.net/attachment/273612/TP4056.pdf), [LCSC part C16581](https://www.lcsc.com/product-detail/C16581.html).
 
 The firmware is built on Jieli's "SPP and LE transparent-data" example: the printer's SDP record
 advertises a Serial Port (channel 1) and the 16-bit UUID `0xAF30`, which is the EIR UUID used by
